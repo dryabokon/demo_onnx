@@ -123,14 +123,15 @@ def ex_onnx_detect(filename_onnx,filename_image):
     colors = [colors80[int(i)] for i in class_ids]
     image_res = tools_draw_numpy.draw_rects(image, rects.reshape((-1,2,2)), colors, labels=labels, w=2, alpha_transp=0.8)
     cv2.imwrite(folder_out + 'res_onnx.jpg', image_res)
+    print(folder_out + 'res_onnx.jpg')
     return
 # ----------------------------------------------------------------------------------------------------------------------
-def ex_happy_path():
+def ex_happy_path(filename_image):
     model_detect = YOLO('yolov8n.pt')
-    model_detect.predict('./data/ex_detector/dog_bicycle.jpg')
+    model_detect.predict(filename_image)
 
     model_detect = YOLO('yolov8.yaml')
-    model_detect.predict('./data/ex_detector/dog_bicycle.jpg')
+    model_detect.predict(filename_image)
 
     #model_detect.train(data='coco128.yaml', epochs=1, imgsz=640)
 
@@ -148,12 +149,13 @@ def ex_process_grayscaled():
 
     return
 # ----------------------------------------------------------------------------------------------------------------------
-
 if __name__ == '__main__':
 
-    ex_onnx_detect('yolov8n.onnx', './dog_bicycle.jpg')
-    #ex_happy_path()
-    #ex_process_grayscaled()
+    filename_image = './dog_bicycle.jpg'
+
+    ex_onnx_detect('yolov8n.onnx',filename_image )
+    ex_happy_path(filename_image)
+
 
 
 
